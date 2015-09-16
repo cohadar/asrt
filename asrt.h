@@ -92,3 +92,18 @@
         _ASRT_PASS(); \
     } while (0)
 
+#define ASRT_size_t(A, B) \
+    do { \
+        if ((A) != (B)) { \
+            printf( \
+                "%s:%u:\n" \
+                "ASRT_size_t(%s, %s)\n" \
+                "expect: %zu\t(0x%zX)\n" \
+                "actual: %zu\t(0x%zX)\n\n", \
+                __FILE__, __LINE__, #A, #B, (A), (A), (B), (B) \
+            ); \
+            _ASRT_FAIL(); \
+        } \
+        _ASRT_PASS(); \
+    } while (0)
+

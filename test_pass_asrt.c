@@ -43,6 +43,15 @@ test_pass_ASRT_int()
 	ASRT_int(INT_MAX, INT_MAX);
 }
 
+void
+test_pass_ASRT_size_t()
+{
+	ASRT_size_t((size_t)0, (size_t)0);
+	ASRT_size_t((size_t)1, (size_t)1);
+	ASRT_size_t((size_t)123, (size_t)123);
+	ASRT_size_t(SIZE_T_MAX, SIZE_T_MAX);
+}
+
 int
 main(int argc, char const *argv[])
 {
@@ -50,6 +59,7 @@ main(int argc, char const *argv[])
 	test_pass_ASRT_char();
 	test_pass_ASRT_strz();
 	test_pass_ASRT_int();
+	test_pass_ASRT_size_t();
 	printf("All OK.\n");
 	return 0;
 }

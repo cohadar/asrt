@@ -53,6 +53,15 @@ test_fail_ASRT_int()
 	ASRT_int(INT_MIN, INT_MAX);
 }
 
+void
+test_fail_ASRT_size_t()
+{
+	size_t a = 5;
+	size_t b = 7;
+	ASRT_size_t(a, b);
+	ASRT_size_t(b, SIZE_T_MAX);
+}
+
 int
 main(int argc, char const *argv[])
 {
@@ -60,6 +69,7 @@ main(int argc, char const *argv[])
 	test_fail_ASRT_char();
 	test_fail_ASRT_strz();
 	test_fail_ASRT_int();
+	test_fail_ASRT_size_t();
 	printf("fail_count = %d\n", fail_count);
 	return 0;
 }
