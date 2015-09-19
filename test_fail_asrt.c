@@ -6,10 +6,14 @@
 #include "asrt.h"
 
 int fail_count = 0;
+int pass_count = 0;
 
 // redefine _ASRT_FAIL so we only print fail messages without aborting
 #undef _ASRT_FAIL
 #define _ASRT_FAIL() fail_count++
+// redefine _ASRT_PASS so we make sure it never happends in fail tests
+#undef _ASRT_PASS
+#define _ASRT_PASS() pass_count++
 
 void
 test_fail_ASRT_true()
@@ -62,6 +66,16 @@ test_fail_ASRT_size_t()
 	ASRT_size_t(b, SIZE_T_MAX);
 }
 
+void
+test_fail_ASRT_double()
+{
+	double distance = 1.01;
+	double radius = 1.0;
+	ASRT_double(distance, radius, 0.001);
+	ASRT_double(1.0, 0.0, 0.0);
+	ASRT_double(3300.0, 3000.0, 100.0);
+}
+
 int
 main(int argc, char const *argv[])
 {
@@ -70,6 +84,13 @@ main(int argc, char const *argv[])
 	test_fail_ASRT_strz();
 	test_fail_ASRT_int();
 	test_fail_ASRT_size_t();
-	printf("fail_count = %d\n", fail_count);
-	return 0;
+	test_fail_ASRT_double();
+	printf("failed:%d, passed:%d\n", fail_count, pass_count);
+	if (pass_count > 0 ) {
+		printf("Error: You have a bad fail test!\n");
+		return 1;
+	} else {
+		printf("All fails Ok!\n");
+		return 0;
+	}
 }

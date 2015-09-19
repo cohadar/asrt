@@ -1,8 +1,10 @@
 // TODO: #ifndef NDEBUG ???
-
+// TODO: conditional includes
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+#include <float.h>
 
 /*
  * Redefine next two macros if you want to integrate ASRT into your test framework.
@@ -15,7 +17,9 @@
 
 #define ASRT_true(A) \
 	do { \
-    	if (!(A)) { \
+    	if (A) { \
+            _ASRT_PASS(); \
+        } else { \
     		printf( \
     			"%s:%u:\n" \
     			"ASRT_true(%s)\n\n", \
@@ -23,12 +27,13 @@
     		); \
     		_ASRT_FAIL(); \
 		} \
-		_ASRT_PASS(); \
     } while (0)
 
 #define ASRT_char(A, B) \
 	do { \
-    	if ((A) != (B)) { \
+    	if ((A) == (B)) { \
+            _ASRT_PASS(); \
+        } else { \
     		printf( \
     			"%s:%u:\n" \
     			"ASRT_char(%s, %s)\n" \
@@ -38,7 +43,6 @@
     		); \
     		_ASRT_FAIL(); \
 		} \
-		_ASRT_PASS(); \
     } while (0)
 
 #define ASRT_strz(A, B) \
@@ -79,7 +83,9 @@
 
 #define ASRT_int(A, B) \
     do { \
-        if ((A) != (B)) { \
+        if ((A) == (B)) { \
+            _ASRT_PASS(); \
+        } else { \
             printf( \
                 "%s:%u:\n" \
                 "ASRT_int(%s, %s)\n" \
@@ -89,12 +95,13 @@
             ); \
             _ASRT_FAIL(); \
         } \
-        _ASRT_PASS(); \
     } while (0)
 
 #define ASRT_size_t(A, B) \
     do { \
-        if ((A) != (B)) { \
+        if ((A) == (B)) { \
+            _ASRT_PASS(); \
+        } else { \
             printf( \
                 "%s:%u:\n" \
                 "ASRT_size_t(%s, %s)\n" \
@@ -104,6 +111,36 @@
             ); \
             _ASRT_FAIL(); \
         } \
-        _ASRT_PASS(); \
+    } while (0)
+
+#define ASRT_double(A, B, C) \
+    do { \
+        if ( C == 0.0 ) { \
+            if ((A) == (B)) { \
+                _ASRT_PASS(); \
+            } else { \
+                printf( \
+                    "%s:%u:\n" \
+                    "ASRT_double(%s, %s, %s)\n" \
+                    "expect: %1.16e\t(%.17g)\n" \
+                    "actual: %1.16e\t(%.17g)\n" \
+                    "tolrnc: none\n\n", \
+                    __FILE__, __LINE__, #A, #B, #C, (A), (A), (B), (B) \
+                ); \
+                _ASRT_FAIL(); \
+            } \
+        } else if (round(fabs((A) - (B)) / (C)) * (C) != 0.0 ) { \
+            printf( \
+                "%s:%u:\n" \
+                "ASRT_double(%s, %s, %s)\n" \
+                "expect: %1.16e\t(%.17g)\n" \
+                "actual: %1.16e\t(%.17g)\n" \
+                "tolrnc: %1.16e\t(%.17g)\n\n", \
+                __FILE__, __LINE__, #A, #B, #C, (A), (A), (B), (B), (C), (C) \
+            ); \
+            _ASRT_FAIL(); \
+        } else { \
+            _ASRT_PASS(); \
+        } \
     } while (0)
 
