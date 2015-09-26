@@ -1,10 +1,22 @@
 // TODO: #ifndef NDEBUG ???
-// TODO: conditional includes
+
+// TODO: conditional includes?
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <float.h>
+#include <inttypes.h>
+
+/*
+    ASRT_true(A)
+    ASRT_char(A, B)
+    ASRT_strz(A, B)
+    ASRT_int(A, B)
+    ASRT_size_t(A, B)
+    ASRT_uint32_t(A, B)
+    ASRT_double(A, B, C)
+*/
 
 /*
  * Redefine next two macros if you want to integrate ASRT into your test framework.
@@ -144,3 +156,18 @@
         } \
     } while (0)
 
+#define ASRT_uint32_t(A, B) \
+    do { \
+        if ((A) == (B)) { \
+            _ASRT_PASS(); \
+        } else { \
+            printf( \
+                "%s:%u:\n" \
+                "ASRT_uint32_t(%s, %s)\n" \
+                "expect: %" PRIu32 "\t(0x%" PRIx32 ")\n" \
+                "actual: %" PRIu32 "\t(0x%" PRIx32 ")\n\n", \
+                __FILE__, __LINE__, #A, #B, (A), (A), (B), (B) \
+            ); \
+            _ASRT_FAIL(); \
+        } \
+    } while (0)

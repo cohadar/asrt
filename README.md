@@ -3,7 +3,15 @@ C assertion drop-in header
 
 The goal is to have type specific assertion macros that give better fail messages than generic assert.
 Most macros have a name in the form: ASRT_base_type
-``` ASRT_char, ASRT_strz, ASRT_int, ASRT_size_t, ASRT_double ```
+```
+    ASRT_true(A)
+    ASRT_char(A, B)
+    ASRT_strz(A, B)
+    ASRT_int(A, B)
+    ASRT_size_t(A, B)
+    ASRT_uint32_t(A, B)
+    ASRT_double(A, B, C)
+```
 There is also a generic zero/null checker ```ASRT_true``` that behaves like standard assert.
 
 I am a big believer in YAGNI principle: https://en.wikipedia.org/wiki/You_aren't_gonna_need_it ,

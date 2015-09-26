@@ -52,13 +52,21 @@ test_pass_ASRT_size_t()
 	ASRT_size_t(SIZE_T_MAX, SIZE_T_MAX);
 }
 
-
 void
 test_pass_ASRT_double()
 {
 	ASRT_double(M_PI, M_PI, 0.0);
 	ASRT_double(1.0031, 1.007, 0.01);
 	ASRT_double(3300.0, 3500.0, 1000.0);
+}
+
+void
+test_pass_ASRT_uint32_t()
+{
+	ASRT_uint32_t((uint32_t)0, (uint32_t)0);
+	ASRT_uint32_t((uint32_t)1, (uint32_t)1);
+	ASRT_uint32_t((uint32_t)123, (uint32_t)123);
+	ASRT_uint32_t(UINT32_MAX, UINT32_MAX);
 }
 
 int
@@ -70,6 +78,7 @@ main(int argc, char const *argv[])
 	test_pass_ASRT_int();
 	test_pass_ASRT_size_t();
 	test_pass_ASRT_double();
+	test_pass_ASRT_uint32_t();
 	printf("All OK.\n");
 	return 0;
 }

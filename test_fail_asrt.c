@@ -76,6 +76,15 @@ test_fail_ASRT_double()
 	ASRT_double(3300.0, 3000.0, 100.0);
 }
 
+void
+test_fail_ASRT_uint32_t()
+{
+	uint32_t a = 5;
+	uint32_t b = 7;
+	ASRT_uint32_t(a, b);
+	ASRT_uint32_t(b, UINT32_MAX);
+}
+
 int
 main(int argc, char const *argv[])
 {
@@ -85,6 +94,7 @@ main(int argc, char const *argv[])
 	test_fail_ASRT_int();
 	test_fail_ASRT_size_t();
 	test_fail_ASRT_double();
+	test_fail_ASRT_uint32_t();
 	printf("failed:%d, passed:%d\n", fail_count, pass_count);
 	if (pass_count > 0 ) {
 		printf("Error: You have a bad fail test!\n");
